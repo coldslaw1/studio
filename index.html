@@ -1,0 +1,94 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Engines: small engines for browser games, with playable demos</title>
+<meta name="description" content="Small, dependency-free JavaScript engines for browser games, with playable demos: 3D scenes drawn in text, live character rigs, combat, creature minds, endless worlds and more.">
+<meta property="og:title" content="Studio Engines">
+<meta property="og:description" content="Small engines for browser games. Every demo plays right in the browser.">
+<meta property="og:image" content="https://coldslaw1.github.io/studio/thumbs/hamlet.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%230b0a12'/%3E%3Ctext x='8' y='12.5' font-family='monospace' font-size='12' font-weight='700' text-anchor='middle' fill='%23ffcf5c'%3E@%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="brand"><b>@</b> Studio Engines</span>
+    <nav><a href="#demos">Demos</a><a href="#engines">Engines</a><a href="#about">About</a></nav>
+  </header>
+  <div class="hero">
+    <div>
+      <h1><span id="engineWord">Nineteen</span> small engines for <em>browser games</em>.</h1>
+      <p class="lead">Plain JavaScript, no build step, no dependencies. 3D scenes drawn in coloured text, characters animated live, enemies that think, worlds with no edge. Every demo on this page plays right here.</p>
+      <div class="cta">
+        <a class="btn primary" id="heroPlay" href="play.html?demo=hamlet">&#9654; Play the hamlet</a>
+        <a class="btn" href="#demos">See all demos</a>
+      </div>
+      <div class="facts"><span><b id="engineCount">19</b>engines</span><span><b id="demoCount">16</b>playable demos</span><span><b>0</b>dependencies</span></div>
+    </div>
+    <a class="shot" href="play.html?demo=hamlet"><img src="thumbs/hamlet.jpg" alt="A village with houses, trees and a tower, drawn entirely in coloured text characters" width="960" height="640"><span>This is text. Every cell is a character.</span></a>
+  </div>
+</div>
+
+<section id="demos"><div class="wrap">
+  <h2>Start here</h2>
+  <p class="sub">The showpieces. Best with a keyboard.</p>
+  <div class="grid big" id="featured"></div>
+</div></section>
+<section><div class="wrap">
+  <h2>More demos</h2>
+  <p class="sub">Smaller, single-purpose examples. Pick an engine to narrow the list.</p>
+  <div class="chips" id="chips" role="group" aria-label="Show demos by engine"></div>
+  <div class="grid" id="more"></div>
+</div></section>
+<section id="engines"><div class="wrap">
+  <h2>The engines</h2>
+  <p class="sub">Each engine is one folder of plain ES modules that a game copies in. They share a few rules: time is passed in, randomness is seeded, logic runs without a browser so it can be tested.</p>
+  <div class="engines" id="engineList"></div>
+</div></section>
+<section id="about"><div class="wrap">
+  <h2>About this site</h2>
+  <p class="sub">A static snapshot. Nothing here talks to a server.</p>
+  <div class="grid big">
+    <div class="note"><b>Multiplayer is not playable here.</b> Parley, the multiplayer engine, needs a small relay server, and this site is only static files. Its two example games, a tag game and a stone-placing board game, are left out.</div>
+    <div class="note"><b>The 3D text scenes are rendered ahead of time.</b> Kiln builds each scene with the open-source Asciicker renderer, then the browser lights it, sorts characters behind scenery using the renderer's depth, and draws the live characters on top. The site carries the finished scenes, so it needs no native program.</div>
+    <div class="note" id="buildNote"><b>Snapshot.</b> The engines are still being worked on.</div>
+  </div>
+</div></section>
+<footer><div class="wrap">
+  <p>The engines, demos and all art on this site are original work generated from code. All rights reserved unless a file says otherwise.</p>
+  <p>3D text scenes are rendered with <a href="https://github.com/msokalski/asciicker" rel="noopener">Asciicker</a>, Copyright (c) 2021 gumix / msokalski, used under the MIT license. <a href="licenses/ASCIICKER-LICENSE.txt">Read the license</a>. No Asciicker game content is used.</p>
+  <p>The hamlet game also uses: icons by Lorc, Delapouite and the other <a href="https://game-icons.net" rel="noopener">game-icons.net</a> contributors (CC BY 3.0); Impact Sounds and RPG Audio by <a href="https://kenney.nl" rel="noopener">Kenney</a> (CC0); and the fonts Alegreya, Baloo 2, Cinzel, Grenze Gotisch, Nunito and VT323 (SIL Open Font License 1.1, license files alongside). The game's own Credits screen lists them too.</p>
+</div></footer>
+<script type="module">
+import { DEMOS, ENGINE_INFO } from './demos.js';
+const build = await fetch('./build.json').then((r) => r.json()).catch(() => null);
+const list = build ? DEMOS.filter((d) => build.demos.includes(d.id)) : DEMOS;
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const card = (d) => `<a class="card" href="play.html?demo=${d.id}"><div class="thumb" style="background-image:url(thumbs/${d.id}.jpg)" role="img" aria-label="Screenshot of ${esc(d.title)}"><span class="go">&#9654; Play</span></div><div class="body"><h3>${esc(d.title)}</h3><p>${esc(d.blurb)}</p><div class="meta">${d.uses.slice(0, 5).map((u) => `<span class="tag">${esc(ENGINE_INFO[u].name)}</span>`).join('')}${d.uses.length > 5 ? `<span class="tag">+${d.uses.length - 5} more</span>` : ''}</div></div></a>`;
+document.getElementById('featured').innerHTML = list.filter((d) => d.featured).map(card).join('');
+const rest = list.filter((d) => !d.featured);
+const more = document.getElementById('more');
+const chips = document.getElementById('chips');
+const inRest = Object.keys(ENGINE_INFO).filter((k) => rest.some((d) => d.uses.includes(k)));
+function show(key) {
+  more.innerHTML = rest.filter((d) => !key || d.uses.includes(key)).map(card).join('');
+  for (const b of chips.children) b.setAttribute('aria-pressed', String((b.dataset.key || '') === (key || '')));
+}
+chips.innerHTML = `<button class="chip" data-key="">All</button>` + inRest.map((k) => `<button class="chip" data-key="${k}">${esc(ENGINE_INFO[k].name)}</button>`).join('');
+chips.addEventListener('click', (e) => { const b = e.target.closest('.chip'); if (b) show(b.dataset.key); });
+show('');
+const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'];
+const engineTotal = Object.keys(ENGINE_INFO).length;
+document.getElementById('engineCount').textContent = engineTotal;
+document.getElementById('engineWord').textContent = WORDS[engineTotal] ?? String(engineTotal);
+document.getElementById('demoCount').textContent = list.length;
+document.getElementById('engineList').innerHTML = Object.entries(ENGINE_INFO).map(([key, e]) => {
+  const demos = list.filter((d) => d.uses.includes(key));
+  return `<div class="engine"><h3>${esc(e.name)} <code>${esc(e.tag)}</code></h3><p>${esc(e.what)}</p><div class="links">${demos.length ? demos.map((d) => `<a href="play.html?demo=${d.id}">${esc(d.title)}</a>`).join('') : `<span style="font:13px var(--mono);color:var(--muted)">${key === 'net' ? 'needs a server, so not playable here' : 'no demo on this site yet'}</span>`}</div></div>`;
+}).join('');
+if (build) document.getElementById('buildNote').innerHTML = `<b>Snapshot of ${esc(build.built)}.</b> The engines are still being worked on, so this is a moment in time. Built from: ${Object.entries(build.engines).map(([k, v]) => `${esc(k)} ${esc(v.commit)}`).join(', ')}.`;
+</script>
+</body>
+</html>

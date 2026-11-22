@@ -1,0 +1,97 @@
+{
+ "built": "2026-11-22",
+ "engines": {
+  "core": {
+   "commit": "1978be1"
+  },
+  "levels": {
+   "commit": "f5bb7cd"
+  },
+  "physics": {
+   "commit": "e7d517e"
+  },
+  "collision": {
+   "commit": "4f28b79"
+  },
+  "audio": {
+   "commit": "3bf1b5f"
+  },
+  "dialogue": {
+   "commit": "bfa086a"
+  },
+  "ui": {
+   "commit": "b1fb5b3"
+  },
+  "assets": {
+   "commit": "77bf122"
+  },
+  "net": {
+   "commit": "fb1e59a"
+  },
+  "playbot": {
+   "commit": "1c6b73b"
+  },
+  "puppet": {
+   "commit": "9bc4c22"
+  },
+  "world": {
+   "commit": "40bfc9b"
+  },
+  "camera": {
+   "commit": "444b9a6"
+  },
+  "firstperson": {
+   "commit": "140e310"
+  },
+  "inventory": {
+   "commit": "4d732bc"
+  },
+  "combat": {
+   "commit": "e3b83e8"
+  },
+  "ai": {
+   "commit": "95b4638"
+  },
+  "clock": {
+   "commit": "5aea4b2"
+  },
+  "sky": {
+   "commit": "662f7c8"
+  },
+  "library": {
+   "commit": "fe874bb"
+  }
+ },
+ "notes": [
+  "puppet-styles: left out, its page is not in the snapshot"
+ ],
+ "demos": [
+  "hamlet",
+  "open-world",
+  "puppet",
+  "roam",
+  "combat",
+  "ai",
+  "firstperson",
+  "camera",
+  "inventory",
+  "clock",
+  "ui-showcase",
+  "gen-characters",
+  "sprites",
+  "topdown",
+  "platformer",
+  "bounce",
+  "hello",
+  "ui",
+  "ui-core",
+  "gullrock",
+  "soundboard",
+  "levels",
+  "playbot"
+ ],
+ "openWorld": {
+  "pages": 0,
+  "drawnInBrowser": true
+ }
+}

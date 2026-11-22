@@ -1,0 +1,14 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Puppet demo</title>
+<style>
+  body { margin: 0; background: #14121f; color: #d8d4e8; font: 14px/1.4 system-ui, sans-serif; display: grid; place-items: center; min-height: 100vh; }
+  canvas { background: #1d1b2c; image-rendering: pixelated; max-width: 100vw; }
+  p { margin: 8px 12px; max-width: 1180px; }
+  kbd { background: #2c2942; border-radius: 3px; padding: 1px 5px; }
+</style>
+<canvas id="game" width="1200" height="560"></canvas>
+<p>Left: vector. Right: live ASCII. Same rig, same animation.
+<kbd>WASD</kbd>/<kbd>arrows</kbd> move, <kbd>Shift</kbd> run, <kbd>Space</kbd> jump, <kbd>J</kbd> attack, <kbd>H</kbd> hurt, <kbd>K</kbd> die / get up,
+<kbd>G</kbd> wave, <kbd>E</kbd> swap equipment, <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> villager / knight / skeleton, <kbd>L</kbd> change look, mouse = where the player looks.</p>
+<script type="module" src="./main.js"></script>

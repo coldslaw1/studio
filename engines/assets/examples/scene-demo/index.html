@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiln scene demo</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0b0a12; color: #c8c8d8; font: 14px/1.4 Consolas, monospace; }
+  /* the game's core loop sizes and centres the canvas in the window */
+  canvas { cursor: grab; image-rendering: pixelated; touch-action: none; user-select: none; -webkit-user-drag: none; }
+  #stats { position: fixed; left: 8px; bottom: 6px; font-size: 11px; opacity: 0.55; pointer-events: none; z-index: 2; }
+  #hint { position: fixed; right: 8px; bottom: 6px; max-width: min(92vw, 720px); max-height: 80vh; overflow: auto; font-size: 12px; z-index: 2; background: rgba(11, 10, 18, 0.88); border: 1px solid #2a2a3a; border-radius: 6px; padding: 2px 8px; }
+  #hint summary { cursor: pointer; opacity: 0.7; }
+</style>
+</head>
+<body>
+<canvas id="game" width="960" height="640"></canvas>
+<div id="stats"></div>
+<details id="hint"><summary>About this demo</summary>V (or the button, bottom left) steps through three views: isometric, first person, and orbit. In first person the mouse looks around (click the picture to catch it, Esc lets go), W A S D walk where you look; there is no turning key and no zoom there. In the orbit view, drag (or Q and E) to turn and tilt the camera around the villager by any amount and use the wheel for distance. Rain, snow and fog show in both, and neither moves under a menu, the bag, a dialogue or a cutscene. Isometric view: Mouse wheel (or + and -): zoom. Q and E, or drag on the picture: turn the camera. 0: back to the first view. Arrow keys or WASD: walk. Shift: run. J: swing. G: wave. K: fall down / get up. The characters are rigs animated live by the puppet engine: they turn to face where they go, blend from walk to run, and the guard watches you when you are near. Go behind a house or a tree and you are hidden by it. O: switch depth sorting off and on. Water, buildings, trees, fences and the guard stop you, and you slide along them. Characters are drawn life size; add ?scale=2 to the address for bigger ones, ?detail=6 for finer ones, and ?outlines to see the collision shapes. The camera is the camera engine (vendor/camera): it follows you, eases every move, and stays sharp when zooming by switching to finer pictures of the hamlet, which is baked from 24 angles. The game on top (menus, sound, the quest, the cellar puzzle, loose objects, auto-play and two-player) is in game/, and its keys are listed in the pause menu under Controls.</details>
+<script>window.KILN_LIBRARY = 'library/';</script>
+<script type="module" src="./main.js"></script>
+<script type="module" src="./first-person.js"></script>
+</body>
+</html>

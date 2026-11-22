@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Sprite kiln</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body class="demo">
+<main>
+  <p style="color:var(--muted)">Kiln draws every sprite from a recipe, a style and a seed. Nothing here is a stored picture: the sheet below is drawn in your browser each time you change something, and the same seed always gives the same art.</p>
+  <div class="row">
+    <label>Style <select id="style"></select></label>
+    <label>Seed <input type="text" id="seed" value="7" size="6" maxlength="9" inputmode="numeric"></label>
+    <button class="btn primary" id="again">New seed</button>
+    <span id="info" style="font:13px var(--mono);color:var(--muted)"></span>
+  </div>
+  <div class="sheet" id="sheet"></div>
+</main>
+<script type="module">
+import { build } from '../engines/assets/src/build.js';
+import { RECIPES } from '../engines/assets/src/recipes.js';
+import { STYLES } from '../engines/assets/src/styles.js';
+
+const $ = (id) => document.getElementById(id);
+const BACK = { storybook: '#10231a', nocturne: '#0b0a12', papercut: '#1c2430', crypt: '#0b0a12' };
+for (const name of Object.keys(STYLES)) $('style').add(new Option(name, name));
+function draw() {
+  const style = $('style').value; const seed = Math.abs(parseInt($('seed').value, 10)) || 1;
+  const sprites = Object.keys(RECIPES).map((recipe) => ({ name: recipe.replace(/[^a-z0-9]+/gi, '_').toLowerCase(), recipe }));
+  const t0 = performance.now();
+  try {
+    const built = build({ style, seed, cell: 128, columns: 8, sprites });
+    $('sheet').style.background = BACK[style] ?? '#10131f';
+    $('sheet').innerHTML = built.svg;
+    $('info').textContent = `${sprites.length} sprites drawn in ${(performance.now() - t0).toFixed(0)} ms`;
+  } catch (e) { $('sheet').textContent = e.message; console.error(e); }
+}
+$('style').onchange = draw; $('seed').onchange = draw;
+$('again').onclick = () => { $('seed').value = Math.floor(Math.random() * 99999) + 1; draw(); };
+draw();
+</script>
+</body>
+</html>

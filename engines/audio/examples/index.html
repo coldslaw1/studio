@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Audio engine soundboard</title>
+  <link rel="icon" href="data:,">
+  <style>
+    body { margin: 0; padding: 16px; background: #14181f; color: #e8ecf1; font: 16px/1.4 system-ui, sans-serif; }
+    h1 { font-size: 20px; margin: 0 0 4px; } h2 { font-size: 14px; margin: 20px 0 8px; color: #9fb0c3; text-transform: uppercase; letter-spacing: .06em; }
+    p { margin: 0 0 8px; color: #9fb0c3; }
+    .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    button, input[type=text], input[type=number], select { font: inherit; padding: 10px 14px; border-radius: 8px; border: 1px solid #2c3644; background: #1e2530; color: inherit; }
+    button { cursor: pointer; } button:hover { background: #283242; } button.on { background: #2f6f4f; border-color: #3f8f67; }
+    #describe { flex: 1; min-width: 220px; } #genseed { width: 80px; }
+    label { display: flex; align-items: center; gap: 8px; min-width: 240px; }
+    #meter { height: 10px; width: 100%; max-width: 420px; background: #1e2530; border-radius: 5px; overflow: hidden; }
+    #bar { height: 100%; width: 0; background: #59c28a; }
+    #pad { height: 120px; border: 1px dashed #2c3644; border-radius: 8px; display: grid; place-items: center; color: #9fb0c3; touch-action: none; }
+    pre { background: #0e1116; padding: 12px; border-radius: 8px; overflow: auto; max-height: 260px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h1>Audio engine soundboard</h1>
+  <p>Every sound here is made by code in <code>src/</code>. Click anything.</p>
+  <div id="meter"><div id="bar"></div></div>
+  <p id="stats"></p>
+
+  <h2>Describe a sound</h2>
+  <div class="row">
+    <input type="text" id="describe" value="heavy wooden door creak" aria-label="Description">
+    <select id="style" aria-label="Style"></select>
+    <input type="number" id="genseed" value="1" min="1" aria-label="Seed">
+    <button id="generate">Play</button>
+    <button id="another">Another take</button>
+  </div>
+  <p id="understood"></p>
+  <div class="row" id="ideas"></div>
+
+  <h2>Adaptive music (one score, four states, in the style picked above)</h2>
+  <div class="row" id="score"></div>
+  <div class="row"><label>calm <input type="range" id="intensity" min="0" max="1" step="0.01" value="0" aria-label="Music intensity"> combat</label><span id="times" class="row"></span></div>
+  <h2>The place you are in (every sound and the music is heard in it)</h2>
+  <div class="row" id="spaces"></div>
+  <h2>Places</h2>
+  <div class="row" id="ambience"></div>
+  <h2>Footsteps</h2>
+  <div class="row" id="steps"></div>
+  <h2>A sound at a place</h2>
+  <div class="row" id="emitter"></div>
+  <div id="pad">Turn the campfire on, then move the pointer here: you are the listener, the fire is in the middle.</div>
+
+  <h2>Built-in effects <button id="vary">Variation: standard</button></h2>
+  <div class="row" id="sfx"></div>
+  <h2>Songs by mood</h2>
+  <div class="row" id="music"></div>
+  <h2>Jingles</h2>
+  <div class="row" id="jingles"></div>
+  <h2>Volume</h2>
+  <div class="row" id="volumes"></div>
+  <h2>Data of the last sound or music (plain, editable)</h2>
+  <pre id="song">none</pre>
+
+  <script type="module" src="soundboard.js"></script>
+</body>
+</html>

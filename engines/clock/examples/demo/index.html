@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clock engine demo</title>
+  <link rel="icon" href="data:,">
+  <style>
+    html, body { margin: 0; background: #0b1020; color: #cfd8ea; font: 14px/1.5 system-ui, sans-serif; }
+    main { max-width: 720px; margin: 0 auto; padding: 16px; }
+    canvas { display: block; width: 100%; background: #111830; border-radius: 6px; }
+    button { font: inherit; margin: 8px 6px 0 0; padding: 6px 10px; background: #24304f; color: inherit; border: 1px solid #3a4a75; border-radius: 4px; cursor: pointer; }
+    pre { background: #111830; padding: 10px; border-radius: 6px; white-space: pre-wrap; min-height: 9em; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Clock: 42 ticks per second</h1>
+    <p>Both balls move in the same game tick. The top one is drawn blended between ticks, the bottom one is drawn as the last tick left it.</p>
+    <canvas id="view" width="688" height="200"></canvas>
+    <div id="buttons"></div>
+    <pre id="stats"></pre>
+  </main>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+{
+  "id": "gullrock",
+  "title": "The Lamp at Gullrock",
+  "vars": { "coins": 4, "has_oil": false, "knows_price": false },
+  "events": ["lamp_lit"],
+  "quests": {
+    "light_the_lamp": {
+      "title": "Light the Lamp",
+      "description": "The Gullrock lamp is dark and the fishing boats are still out.",
+      "objectives": [
+        { "id": "get_oil", "text": "Get a flask of lamp oil" },
+        { "id": "bring_oil", "text": "Bring the oil to Odalys" },
+        { "id": "ask_about_storm", "text": "Ask about the old storm", "optional": true }
+      ],
+      "rewards": [ { "add": "coins", "by": 10 }, { "emit": "lamp_lit" } ]
+    }
+  },
+  "dialogues": {
+    "keeper": {
+      "start": "gate",
+      "nodes": {
+        "gate": {
+          "branch": [
+            { "if": { "quest": "light_the_lamp", "is": "done" }, "goto": "thanks_again" },
+            { "if": { "quest": "light_the_lamp", "is": "active" }, "goto": "waiting" },
+            { "goto": "hello" }
+          ]
+        },
+        "hello": {
+          "speaker": "Odalys",
+          "text": "You picked a poor night to visit. The lamp is out and I am down to my last drop of oil.",
+          "choices": [
+            { "text": "I can fetch some oil.", "goto": "accept", "do": [ { "startQuest": "light_the_lamp" } ] },
+            { "text": "Not my problem.", "end": true }
+          ]
+        },
+        "accept": {
+          "speaker": "Odalys",
+          "text": "Bless you. Pim sells it down at the quay. Be quick, the boats are still out.",
+          "end": true
+        },
+        "waiting": {
+          "speaker": "Odalys",
+          "text": "Any luck with that oil?",
+          "choices": [
+            {
+              "text": "Here, one full flask.",
+              "if": { "var": "has_oil" },
+              "goto": "lit",
+              "do": [ { "set": "has_oil", "to": false }, { "progress": "light_the_lamp.bring_oil" } ]
+            },
+            { "text": "What happened in the old storm?", "once": true, "goto": "storm", "do": [ { "progress": "light_the_lamp.ask_about_storm" } ] },
+            { "text": "Still looking.", "end": true }
+          ]
+        },
+        "storm": {
+          "speaker": "Odalys",
+          "text": "Thirty years back the lamp failed for one night. We lost two boats. I have not let it go dark since.",
+          "goto": "waiting"
+        },
+        "lit": {
+          "speaker": "Odalys",
+          "text": "There she goes! Take this for your trouble. You now have {coins} coins.",
+          "end": true
+        },
+        "thanks_again": {
+          "speaker": "Odalys",
+          "text": "The boats all came home. Gullrock owes you one.",
+          "end": true
+        }
+      }
+    },
+    "merchant": {
+      "start": "stall",
+      "nodes": {
+        "stall": {
+          "speaker": "Pim",
+          "text": "Rope, hooks, lamp oil! What will it be?",
+          "choices": [
+            { "text": "How much for the oil?", "once": true, "goto": "price", "do": [ { "set": "knows_price", "to": true } ] },
+            {
+              "text": "One flask of oil. (3 coins)",
+              "if": { "all": [ { "var": "coins", "gte": 3 }, { "var": "has_oil", "eq": false }, { "quest": "light_the_lamp", "is": "active" } ] },
+              "goto": "sold",
+              "do": [ { "add": "coins", "by": -3 }, { "set": "has_oil", "to": true }, { "progress": "light_the_lamp.get_oil" } ]
+            },
+            { "text": "Just looking.", "end": true }
+          ]
+        },
+        "price": { "speaker": "Pim", "text": "Three coins a flask. You have {coins}.", "goto": "stall" },
+        "sold": { "speaker": "Pim", "text": "A pleasure. Mind the steps, they are slick tonight.", "end": true }
+      }
+    }
+  }
+}

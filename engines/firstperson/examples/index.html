@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>First-person engine example</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0b0a12; color: #c8c8d8; font: 13px/1.4 Consolas, monospace; display: grid; place-items: center; }
+  canvas { width: min(96vw, 144vh); image-rendering: pixelated; cursor: crosshair; }
+  #stats { position: fixed; left: 8px; bottom: 6px; opacity: 0.6; }
+</style>
+</head>
+<body>
+<canvas id="game" width="960" height="640"></canvas>
+<div id="stats"></div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

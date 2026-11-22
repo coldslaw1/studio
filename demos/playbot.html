@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Bot play-test</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body class="demo">
+<main>
+  <p style="color:var(--muted)">The levels engine makes five "never cross your own trail" delivery puzzles from the seed. Then three bots, from a button masher to a careful planner, each play every level, and an exact search checks every reachable position. No language model is involved: the bots are small search routines.</p>
+  <div class="row">
+    <label>Seed <input type="text" id="seed" value="garden" size="12" maxlength="24" spellcheck="false"></label>
+    <label>Runs per bot <select id="runs"><option>100</option><option selected>300</option><option>1000</option></select></label>
+    <button class="btn primary" id="go">Run the play-test</button>
+    <span id="progress" style="font:13px var(--mono);color:var(--muted)"></span>
+  </div>
+  <div class="sheet"><table class="report" id="table"></table></div>
+  <pre class="out" id="out">Press "Run the play-test".</pre>
+</main>
+<script>globalThis.process ??= { argv: [] };</script>
+<script type="module">
+// playbot is a Node tool; its bots, search and analysis are plain logic, so they are imported
+// here file by file (its command line and worker-thread parts stay behind).
+import { normalizeAdapter } from '../engines/playbot/src/adapter.js';
+import { DEFAULT_BOTS, createBot } from '../engines/playbot/src/bots.js';
+import { runMany } from '../engines/playbot/src/runner.js';
+import { explore } from '../engines/playbot/src/search.js';
+import { analyze, analyzeLevel } from '../engines/playbot/src/analyze.js';
+import { summaryLines } from '../engines/playbot/src/report.js';
+import { generateTrailPack, trailPuzzle } from '../engines/levels/examples/trail-courier.js';
+
+const $ = (id) => document.getElementById(id);
+const pause = () => new Promise((r) => setTimeout(r, 0));
+const pct = (x) => `${Math.round(x * 100)}%`;
+
+function adapterFor(pack) {
+  const puzzles = pack.map((p) => trailPuzzle(p.level));
+  const houses = pack.map((p) => p.level.join('').split('H').length - 1);
+  return normalizeAdapter({
+    name: 'Trail courier', deterministic: true, maxSteps: 200,
+    levels: () => pack.map((p, i) => ({ id: i, name: `Level ${i + 1}` })),
+    create: ({ level }) => ({ level, s: puzzles[level].start }),
+    actions: (st) => puzzles[st.level].actions.filter((a) => puzzles[st.level].step(st.s, a)),
+    step: (st, action) => { st.s = puzzles[st.level].step(st.s, action) ?? st.s; },
+    status: (st) => (puzzles[st.level].isWon(st.s) ? 'won' : puzzles[st.level].actions.some((a) => puzzles[st.level].step(st.s, a)) ? 'playing' : 'lost'),
+    progress: (st) => (st.s.delivered + st.s.carrying * 0.5) / houses[st.level],
+    clone: (st) => ({ level: st.level, s: st.s }),
+    key: (st) => puzzles[st.level].key(st.s),
+    cause: () => 'boxed in by own trail',
+  });
+}
+
+let busy = false;
+$('go').onclick = async () => {
+  if (busy) return; busy = true;
+  const seed = $('seed').value.trim() || 'garden'; const runs = Number($('runs').value);
+  const started = performance.now();
+  $('out').textContent = 'Making the levels...'; $('table').innerHTML = ''; await pause();
+  try {
+    const pack = generateTrailPack(seed, 5);
+    const adapter = adapterFor(pack);
+    const levels = adapter.levels(); const bots = DEFAULT_BOTS.map(createBot);
+    const total = levels.length * bots.length; let done = 0;
+    const reports = [];
+    for (const level of levels) {
+      const byBot = {};
+      for (const bot of bots) {
+        byBot[bot.name] = [];
+        for (let from = 0; from < runs; from += 50) { byBot[bot.name].push(...runMany(adapter, bot, { level: level.id, baseSeed: seed, from, to: Math.min(runs, from + 50), maxSteps: adapter.maxSteps })); await pause(); }
+        $('progress').textContent = `${++done} of ${total} bot and level pairs`;
+      }
+      reports.push(analyzeLevel(adapter, level, byBot, explore(adapter, level.id, { maxStates: 200000 }), adapter.maxSteps));
+    }
+    const analysis = analyze({ adapter, levels: reports });
+    const report = { game: adapter.name, kind: 'levels', seed, runsPerBot: runs, totalRuns: runs * total, maxSteps: adapter.maxSteps, bots: bots.map((b) => b.spec), elapsedMs: performance.now() - started, ...analysis };
+    const names = bots.map((b) => b.name);
+    $('table').innerHTML = `<tr><th>Level</th><th>Map</th><th>Difficulty</th>${names.map((n) => `<th>${n} wins</th>`).join('')}<th>Shortest win</th><th>Doomed positions</th></tr>`
+      + report.levels.map((l, i) => `<tr><td>${l.name}</td><td><pre style="margin:0;line-height:1.1">${pack[i].level.join('\n')}</pre></td><td><span class="meter"><i style="width:${l.difficulty}%;background:var(--accent)"></i></span>${l.difficulty}</td>`
+        + names.map((n) => `<td><span class="meter"><i style="width:${l.bots[n].successRate * 100}%"></i></span>${pct(l.bots[n].successRate)}</td>`).join('')
+        + `<td>${l.exact?.shortestWin ?? '-'}</td><td>${l.exact?.deadEndShare != null ? pct(l.exact.deadEndShare) : '-'}</td></tr>`).join('');
+    $('out').textContent = summaryLines(report).join('\n');
+    $('progress').textContent = '';
+  } catch (e) { $('out').textContent = `The play-test stopped: ${e.message}`; console.error(e); }
+  busy = false;
+};
+</script>
+</body>
+</html>

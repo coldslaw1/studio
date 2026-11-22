@@ -1,0 +1,28 @@
+// Public API of the ai engine. Games import from this file only.
+export { createAi, createAiState, isAiState } from './ai.js';
+export { makeAgent, isAgent, agentView, emptyIntent } from './agent.js';
+export { ARCHETYPES, TRAITS, personality, agentFromAsset } from './archetypes.js';
+export { BRAINS } from './brains.js';
+export { ACTIONS, CONDITIONS, leaderOf } from './actions.js';
+export { INPUTS, fearOf } from './inputs.js';
+export { curve, CURVE_TYPES, scoreGoal, pickGoal, checkGoals } from './utility.js';
+export { compileTree, tickTree, resetTree } from './bt.js';
+export { createNavGrid, navFromTiles, navFromShapes } from './grid.js';
+export { findPath, smoothPath } from './astar.js';
+export { createFlowField } from './flow.js';
+export { seek, flee, arrive, pursue, evade, wander, separation, cohesion, alignment, avoidWalls, blend, followPath } from './steering.js';
+export { createSpatialHash } from './spatial.js';
+export { canSee, sense, pickTarget, addThreat, crowd } from './perception.js';
+export { planTactics, slotAngles } from './tactics.js';
+export { engage, fleePoint } from './mob.js';
+export { go, halt, arrived, navFailed, travel } from './move.js';
+export { NEEDS, stepNeeds, mostUrgent } from './needs.js';
+export { SCHEDULES, scheduleAt, hourOfDay, hourOffset } from './schedule.js';
+export { createSocial, relate, friendsOf } from './social.js';
+export { BARKS, pickBark } from './barks.js';
+export { animOf } from './sim.js';
+export { hashSeed, rand2, roll, rollRange, rollPick, createRng } from './rng.js';
+export { facingOf, dirOf, angleDiff } from './util.js';
+export { bindCombat } from './bind-combat.js';
+export { createWorldLink } from './bind-world.js';
+export { bindAudio, bindPuppet, bindDialogue, bindBarks } from './bind.js';

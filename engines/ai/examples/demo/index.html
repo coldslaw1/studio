@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ai engine demo: a village, a forest and what lives there</title>
+<style>
+  html, body { margin: 0; background: #14141b; color: #ddd; font: 13px/1.4 monospace; }
+  canvas { display: block; margin: 12px auto 6px; max-width: 100%; image-rendering: pixelated; background: #000; }
+  p { max-width: 960px; margin: 6px auto; padding: 0 8px; }
+  b { color: #fff; }
+</style>
+</head>
+<body>
+<canvas id="stage" width="960" height="600"></canvas>
+<p><b>Walk</b> arrows or WASD, <b>sneak</b> Shift, <b>hit</b> Space, <b>talk</b> E, <b>fast time</b> T, <b>show what they see and plan</b> O, <b>pause</b> P.</p>
+<p>Villagers keep a daily plan (home, work, inn, bed), guards patrol and answer calls for help, wolves hunt as a flanking pack,
+goblins surround and lose their nerve, the boar charges, the shaman keeps its distance, slimes never give up.
+Agents far from you fade: they are simulated in less detail. Hit a villager in front of the others and the village turns on you.</p>
+<!-- the canvas is called "stage", not "game": an element with id "game" would make window.game exist before the script sets it -->
+<script type="module" src="./main.js"></script>
+</body>
+</html>

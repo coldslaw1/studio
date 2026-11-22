@@ -1,0 +1,30 @@
+{
+ "studioLibrary": 1,
+ "picked": true,
+ "models": [],
+ "prefabs": [],
+ "samples": [
+  "impacts",
+  "rpg"
+ ],
+ "packs": [
+  {
+   "id": "kenney-impact-sounds",
+   "kind": "samples",
+   "name": "Impact Sounds",
+   "author": "Kenney",
+   "license": "CC0-1.0",
+   "creditRequired": false,
+   "page": "https://kenney.nl/assets/impact-sounds"
+  },
+  {
+   "id": "kenney-rpg-audio",
+   "kind": "samples",
+   "name": "RPG Audio",
+   "author": "Kenney",
+   "license": "CC0-1.0",
+   "creditRequired": false,
+   "page": "https://kenney.nl/assets/rpg-audio"
+  }
+ ]
+}

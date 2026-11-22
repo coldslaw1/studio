@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Dungeon maker</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body class="demo">
+<main>
+  <div class="row">
+    <label>Puzzle <select id="kind"><option value="dungeon">Key and door dungeon</option><option value="trail">Trail courier</option></select></label>
+    <label>Seed <input type="text" id="seed" value="crypt" size="12" maxlength="24" spellcheck="false"></label>
+    <button class="btn" id="random">Random seed</button>
+    <button class="btn primary" id="watch">Watch the solver</button>
+    <button class="btn" id="reset">Reset</button>
+  </div>
+  <canvas class="board" id="board" width="840" height="520"></canvas>
+  <pre class="out" id="out"></pre>
+</main>
+<script>globalThis.process ??= { argv: [] }; // the engine's examples also run under Node and look at process.argv</script>
+<script type="module">
+import { generateDungeon, dungeonPuzzle } from '../engines/levels/examples/key-dungeon.js';
+import { generateTrailPack, trailPuzzle } from '../engines/levels/examples/trail-courier.js';
+import { fromRows, DIRS } from '../engines/levels/src/index.js';
+
+const $ = (id) => document.getElementById(id);
+const canvas = $('board'); const ctx = canvas.getContext('2d');
+const WORDS = ['crypt', 'vault', 'ember', 'moss', 'gull', 'lantern', 'barrow', 'thistle', 'kiln', 'marrow', 'quill', 'salt'];
+const KINDS = {
+  dungeon: {
+    make: (seed) => generateDungeon(seed), puzzle: dungeonPuzzle,
+    legend: '@ you   k key   D locked door   E exit',
+    tileAt(ch, i, state) { if (ch === 'k' && state.taken.includes(i)) return '.'; if (ch === 'D' && state.opened.includes(i)) return '/'; return ch === '@' ? '.' : ch; },
+    status: (s) => `keys in hand: ${s.keys}`,
+  },
+  trail: {
+    make: (seed) => generateTrailPack(seed, 4)[3], puzzle: trailPuzzle,
+    legend: 'S start   P parcel   H house. You can never step on your own trail, and a house needs a parcel in hand.',
+    tileAt(ch, i, state) { if (state.slime[i] === '1') return '~'; return ch === 'S' ? '.' : ch; },
+    status: (s) => `carrying ${s.carrying}, delivered ${s.delivered}`,
+  },
+};
+const LOOK = {
+  '#': ['#2b2a40', '#3d3c58', '#'], '.': ['#12111c', '#2a2a3e', '.'], '/': ['#12111c', '#8a6a3a', '/'], '~': ['#17281c', '#3f7a52', '~'],
+  k: ['#12111c', '#ffcf5c', 'k'], D: ['#3a2a14', '#d49a4a', 'D'], E: ['#12281a', '#6fd08c', 'E'], P: ['#12111c', '#ffcf5c', 'P'], H: ['#241a2c', '#ff8fb0', 'H'],
+};
+let kind; let result; let puzzle; let grid; let state; let moves; let timer = null; let note = '';
+
+function make() {
+  stop();
+  kind = KINDS[$('kind').value];
+  const seed = $('seed').value.trim() || 'crypt';
+  const t0 = performance.now();
+  try { result = kind.make(seed); } catch (e) { result = null; $('out').textContent = `No level for this seed: ${e.message}`; return; }
+  note = `seed "${seed}": made in ${(performance.now() - t0).toFixed(0)} ms on attempt ${result.attempt + 1}. Shortest win is ${result.solution.steps} moves; the solver looked at ${result.solution.explored} positions.`;
+  puzzle = kind.puzzle(result.level); grid = fromRows(result.level);
+  reset();
+}
+function reset() { stop(); state = puzzle.start; moves = 0; draw(); }
+function stop() { if (timer) clearInterval(timer); timer = null; }
+function act(name) {
+  if (puzzle.isWon(state)) return;
+  const next = puzzle.step(state, name);
+  if (next) { state = next; moves++; draw(); }
+}
+function draw() {
+  const size = Math.floor(Math.min(canvas.width / grid.w, canvas.height / grid.h));
+  const ox = Math.floor((canvas.width - size * grid.w) / 2); const oy = Math.floor((canvas.height - size * grid.h) / 2);
+  ctx.fillStyle = '#07060c'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.font = `600 ${Math.floor(size * 0.7)}px Consolas, monospace`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  for (let y = 0; y < grid.h; y++) for (let x = 0; x < grid.w; x++) {
+    const i = y * grid.w + x;
+    const [bg, fg, glyph] = LOOK[kind.tileAt(grid.cells[i], i, state)] ?? LOOK['.'];
+    ctx.fillStyle = bg; ctx.fillRect(ox + x * size, oy + y * size, size - 1, size - 1);
+    ctx.fillStyle = fg; ctx.fillText(glyph, ox + x * size + size / 2, oy + y * size + size / 2 + 1);
+  }
+  ctx.fillStyle = '#ffffff'; ctx.fillText('@', ox + state.x * size + size / 2, oy + state.y * size + size / 2 + 1);
+  const won = puzzle.isWon(state);
+  const stuck = !won && !puzzle.actions.some((a) => puzzle.step(state, a));
+  $('out').textContent = `${note}\n${kind.legend}\nMoves: ${moves}   ${kind.status(state)}${won ? '   Solved!' : stuck ? '   Stuck. Press Reset.' : ''}\nPlay it yourself with the arrow keys or WASD, or tap beside the @.`;
+}
+$('watch').onclick = () => {
+  reset(); let i = 0; const path = result.solution.path;
+  timer = setInterval(() => { if (i >= path.length) return stop(); act(path[i++]); }, 110);
+};
+$('reset').onclick = reset;
+$('random').onclick = () => { $('seed').value = WORDS[Math.floor(Math.random() * WORDS.length)] + '-' + Math.floor(Math.random() * 900 + 100); make(); };
+$('seed').onchange = make; $('kind').onchange = make;
+const KEYS = { arrowup: [0, -1], w: [0, -1], arrowdown: [0, 1], s: [0, 1], arrowleft: [-1, 0], a: [-1, 0], arrowright: [1, 0], d: [1, 0] };
+const dirName = (dx, dy) => DIRS.find((d) => d.dx === dx && d.dy === dy).name;
+addEventListener('keydown', (e) => {
+  if (e.target instanceof HTMLInputElement) return;
+  const k = KEYS[e.key.toLowerCase()]; if (!k || !result) return;
+  e.preventDefault(); stop(); act(dirName(k[0], k[1]));
+});
+canvas.addEventListener('pointerdown', (e) => {
+  if (!result) return;
+  const r = canvas.getBoundingClientRect(); const size = Math.floor(Math.min(canvas.width / grid.w, canvas.height / grid.h));
+  const cx = (e.clientX - r.left) / r.width * canvas.width - (canvas.width - size * grid.w) / 2 - (state.x + 0.5) * size;
+  const cy = (e.clientY - r.top) / r.height * canvas.height - (canvas.height - size * grid.h) / 2 - (state.y + 0.5) * size;
+  stop(); act(Math.abs(cx) > Math.abs(cy) ? dirName(Math.sign(cx) || 1, 0) : dirName(0, Math.sign(cy) || 1));
+});
+make();
+</script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+{
+ "studioAudio": "samples",
+ "version": 1,
+ "name": "rpg",
+ "sampleRate": 32000,
+ "sounds": {
+  "door-open": {
+   "takes": [
+    {
+     "file": "sounds/door-open-1.wav"
+    },
+    {
+     "file": "sounds/door-open-2.wav"
+    }
+   ],
+   "tags": [
+    "door",
+    "open"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "RPG Audio",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/rpg-audio"
+   }
+  },
+  "door-close": {
+   "takes": [
+    {
+     "file": "sounds/door-close-1.wav"
+    },
+    {
+     "file": "sounds/door-close-2.wav"
+    },
+    {
+     "file": "sounds/door-close-3.wav"
+    },
+    {
+     "file": "sounds/door-close-4.wav"
+    }
+   ],
+   "tags": [
+    "door",
+    "close"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "RPG Audio",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/rpg-audio"
+   }
+  },
+  "wood-creak": {
+   "takes": [
+    {
+     "file": "sounds/wood-creak-1.wav"
+    },
+    {
+     "file": "sounds/wood-creak-2.wav"
+    },
+    {
+     "file": "sounds/wood-creak-3.wav"
+    }
+   ],
+   "tags": [
+    "wood",
+    "creak"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "RPG Audio",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/rpg-audio"
+   }
+  },
+  "coin-pickup": {
+   "takes": [
+    {
+     "file": "sounds/coin-pickup-1.wav"
+    },
+    {
+     "file": "sounds/coin-pickup-2.wav"
+    }
+   ],
+   "tags": [
+    "coin",
+    "pickup"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "RPG Audio",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/rpg-audio"
+   }
+  },
+  "cloth-rustle": {
+   "takes": [
+    {
+     "file": "sounds/cloth-rustle-1.wav"
+    },
+    {
+     "file": "sounds/cloth-rustle-2.wav"
+    },
+    {
+     "file": "sounds/cloth-rustle-3.wav"
+    },
+    {
+     "file": "sounds/cloth-rustle-4.wav"
+    },
+    {
+     "file": "sounds/cloth-rustle-5.wav"
+    }
+   ],
+   "tags": [
+    "cloth",
+    "rustle"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "RPG Audio",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/rpg-audio"
+   }
+  },
+  "paper-rustle": {
+   "takes": [
+    {
+     "file": "sounds/paper-rustle-1.wav"
+    },
+    {
+     "file": "sounds/paper-rustle-2.wav"
+    },
+    {
+     "file": "sounds/paper-rustle-3.wav"
+    }
+   ],
+   "tags": [
+    "paper",
+    "rustle"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "RPG Audio",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/rpg-audio"
+   }
+  },
+  "leather-impact": {
+   "takes": [
+    {
+     "file": "sounds/leather-impact-1.wav"
+    }
+   ],
+   "tags": [
+    "leather",
+    "impact"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "RPG Audio",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/rpg-audio"
+   }
+  },
+  "metal-pot-impact": {
+   "takes": [
+    {
+     "file": "sounds/metal-pot-impact-1.wav"
+    },
+    {
+     "file": "sounds/metal-pot-impact-2.wav"
+    },
+    {
+     "file": "sounds/metal-pot-impact-3.wav"
+    }
+   ],
+   "tags": [
+    "metal",
+    "impact",
+    "pot"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "RPG Audio",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/rpg-audio"
+   }
+  }
+ }
+}

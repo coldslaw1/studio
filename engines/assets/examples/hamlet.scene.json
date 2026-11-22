@@ -1,0 +1,258 @@
+{
+  "name": "hamlet",
+  "size": [
+    120,
+    80
+  ],
+  "zoom": 2,
+  "camera": {
+    "at": [
+      40,
+      40
+    ],
+    "lift": 0,
+    "yaw": 35,
+    "zoom": 1.6,
+    "perspective": false
+  },
+  "light": [
+    1,
+    -0.5,
+    1,
+    0.55
+  ],
+  "sky": {
+    "bg": "#10131f",
+    "fg": "#2a3350",
+    "glyph": "."
+  },
+  "water": 22,
+  "materials": {
+    "grass": {
+      "fg": "#66cc66",
+      "bg": "#339933",
+      "glyph": ","
+    },
+    "path": {
+      "fg": "#cc9966",
+      "bg": "#996633",
+      "glyph": "."
+    },
+    "stone": {
+      "fg": "#ccccff",
+      "bg": "#9999aa",
+      "glyph": "#"
+    },
+    "sand": {
+      "fg": "#ffff99",
+      "bg": "#cccc66",
+      "glyph": ":"
+    }
+  },
+  "terrain": {
+    "patches": [
+      10,
+      10
+    ],
+    "hills": {
+      "base": 34,
+      "amp": 44,
+      "scale": 11,
+      "seed": 4
+    },
+    "flatten": [
+      {
+        "at": [
+          40,
+          40
+        ],
+        "radius": 17,
+        "height": 40,
+        "blend": 8
+      }
+    ],
+    "paint": [
+      {
+        "material": "grass"
+      },
+      {
+        "material": "sand",
+        "below": 26
+      },
+      {
+        "material": "stone",
+        "above": 58
+      },
+      {
+        "material": "path",
+        "rect": [
+          38,
+          22,
+          42,
+          58
+        ]
+      },
+      {
+        "material": "path",
+        "near": [
+          40,
+          40,
+          5
+        ]
+      }
+    ]
+  },
+  "objects": [
+    {
+      "shape": "cottage",
+      "at": [
+        28,
+        33
+      ],
+      "yaw": 0
+    },
+    {
+      "shape": "house",
+      "at": [
+        52,
+        48
+      ],
+      "yaw": 90,
+      "scale": 0.85,
+      "params": {
+        "colors": {
+          "roof": "#336699"
+        }
+      }
+    },
+    {
+      "shape": "roundtower",
+      "at": [
+        52,
+        27
+      ]
+    },
+    {
+      "shape": "windmill",
+      "at": [
+        27,
+        50
+      ],
+      "yaw": 150,
+      "scale": 1.0,
+      "params": {
+        "turn": 20
+      }
+    },
+    {
+      "shape": "well",
+      "at": [
+        44,
+        41
+      ]
+    },
+    {
+      "shape": "oak",
+      "at": [
+        23,
+        41
+      ]
+    },
+    {
+      "shape": "pine",
+      "at": [
+        60,
+        37
+      ],
+      "scale": 1.1
+    },
+    {
+      "shape": "pine",
+      "at": [
+        57,
+        33
+      ],
+      "scale": 0.9
+    },
+    {
+      "shape": "tree",
+      "at": [
+        25,
+        22
+      ],
+      "scale": 0.9
+    },
+    {
+      "shape": "oak",
+      "at": [
+        45,
+        18
+      ],
+      "scale": 0.8
+    },
+    {
+      "shape": "rock",
+      "at": [
+        47,
+        57
+      ],
+      "params": {
+        "seed": 3
+      }
+    },
+    {
+      "shape": "fence",
+      "at": [
+        34,
+        44
+      ],
+      "yaw": 90,
+      "params": {
+        "length": 8
+      }
+    },
+    {
+      "shape": "haystack",
+      "at": [
+        31,
+        45
+      ]
+    },
+    {
+      "shape": "barrel",
+      "at": [
+        37,
+        36
+      ]
+    },
+    {
+      "shape": "barrel",
+      "at": [
+        36,
+        35
+      ]
+    },
+    {
+      "shape": "lamp",
+      "at": [
+        43,
+        36
+      ]
+    },
+    {
+      "shape": "signpost",
+      "at": [
+        43,
+        52
+      ]
+    },
+    {
+      "shape": "gate",
+      "at": [
+        40,
+        24
+      ],
+      "yaw": 0
+    }
+  ]
+}

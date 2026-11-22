@@ -1,0 +1,524 @@
+{
+ "studioAudio": "samples",
+ "version": 1,
+ "name": "impacts",
+ "sampleRate": 32000,
+ "sounds": {
+  "wood-impact-heavy": {
+   "takes": [
+    {
+     "file": "sounds/wood-impact-heavy-1.wav"
+    },
+    {
+     "file": "sounds/wood-impact-heavy-2.wav"
+    },
+    {
+     "file": "sounds/wood-impact-heavy-3.wav"
+    },
+    {
+     "file": "sounds/wood-impact-heavy-4.wav"
+    },
+    {
+     "file": "sounds/wood-impact-heavy-5.wav"
+    }
+   ],
+   "tags": [
+    "wood",
+    "impact",
+    "heavy"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "wood-impact-light": {
+   "takes": [
+    {
+     "file": "sounds/wood-impact-light-1.wav"
+    },
+    {
+     "file": "sounds/wood-impact-light-2.wav"
+    },
+    {
+     "file": "sounds/wood-impact-light-3.wav"
+    },
+    {
+     "file": "sounds/wood-impact-light-4.wav"
+    },
+    {
+     "file": "sounds/wood-impact-light-5.wav"
+    }
+   ],
+   "tags": [
+    "wood",
+    "impact",
+    "light"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "wood-impact": {
+   "takes": [
+    {
+     "file": "sounds/wood-impact-1.wav"
+    },
+    {
+     "file": "sounds/wood-impact-2.wav"
+    },
+    {
+     "file": "sounds/wood-impact-3.wav"
+    },
+    {
+     "file": "sounds/wood-impact-4.wav"
+    },
+    {
+     "file": "sounds/wood-impact-5.wav"
+    }
+   ],
+   "tags": [
+    "wood",
+    "impact"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "wood-plank-impact": {
+   "takes": [
+    {
+     "file": "sounds/wood-plank-impact-1.wav"
+    },
+    {
+     "file": "sounds/wood-plank-impact-2.wav"
+    },
+    {
+     "file": "sounds/wood-plank-impact-3.wav"
+    },
+    {
+     "file": "sounds/wood-plank-impact-4.wav"
+    },
+    {
+     "file": "sounds/wood-plank-impact-5.wav"
+    }
+   ],
+   "tags": [
+    "wood",
+    "impact",
+    "plank"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "metal-impact-heavy": {
+   "takes": [
+    {
+     "file": "sounds/metal-impact-heavy-1.wav"
+    },
+    {
+     "file": "sounds/metal-impact-heavy-2.wav"
+    },
+    {
+     "file": "sounds/metal-impact-heavy-3.wav"
+    },
+    {
+     "file": "sounds/metal-impact-heavy-4.wav"
+    },
+    {
+     "file": "sounds/metal-impact-heavy-5.wav"
+    }
+   ],
+   "tags": [
+    "metal",
+    "impact",
+    "heavy"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "metal-impact-light": {
+   "takes": [
+    {
+     "file": "sounds/metal-impact-light-1.wav"
+    },
+    {
+     "file": "sounds/metal-impact-light-2.wav"
+    },
+    {
+     "file": "sounds/metal-impact-light-3.wav"
+    },
+    {
+     "file": "sounds/metal-impact-light-4.wav"
+    },
+    {
+     "file": "sounds/metal-impact-light-5.wav"
+    }
+   ],
+   "tags": [
+    "metal",
+    "impact",
+    "light"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "metal-impact": {
+   "takes": [
+    {
+     "file": "sounds/metal-impact-1.wav"
+    },
+    {
+     "file": "sounds/metal-impact-2.wav"
+    },
+    {
+     "file": "sounds/metal-impact-3.wav"
+    },
+    {
+     "file": "sounds/metal-impact-4.wav"
+    },
+    {
+     "file": "sounds/metal-impact-5.wav"
+    }
+   ],
+   "tags": [
+    "metal",
+    "impact"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "glass-impact-heavy": {
+   "takes": [
+    {
+     "file": "sounds/glass-impact-heavy-1.wav"
+    },
+    {
+     "file": "sounds/glass-impact-heavy-2.wav"
+    },
+    {
+     "file": "sounds/glass-impact-heavy-3.wav"
+    },
+    {
+     "file": "sounds/glass-impact-heavy-4.wav"
+    },
+    {
+     "file": "sounds/glass-impact-heavy-5.wav"
+    }
+   ],
+   "tags": [
+    "glass",
+    "impact",
+    "heavy"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "glass-impact": {
+   "takes": [
+    {
+     "file": "sounds/glass-impact-1.wav"
+    },
+    {
+     "file": "sounds/glass-impact-2.wav"
+    },
+    {
+     "file": "sounds/glass-impact-3.wav"
+    },
+    {
+     "file": "sounds/glass-impact-4.wav"
+    },
+    {
+     "file": "sounds/glass-impact-5.wav"
+    }
+   ],
+   "tags": [
+    "glass",
+    "impact"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "stone-impact": {
+   "takes": [
+    {
+     "file": "sounds/stone-impact-1.wav"
+    },
+    {
+     "file": "sounds/stone-impact-2.wav"
+    },
+    {
+     "file": "sounds/stone-impact-3.wav"
+    },
+    {
+     "file": "sounds/stone-impact-4.wav"
+    },
+    {
+     "file": "sounds/stone-impact-5.wav"
+    }
+   ],
+   "tags": [
+    "stone",
+    "impact"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "cloth-impact": {
+   "takes": [
+    {
+     "file": "sounds/cloth-impact-1.wav"
+    },
+    {
+     "file": "sounds/cloth-impact-2.wav"
+    },
+    {
+     "file": "sounds/cloth-impact-3.wav"
+    },
+    {
+     "file": "sounds/cloth-impact-4.wav"
+    },
+    {
+     "file": "sounds/cloth-impact-5.wav"
+    }
+   ],
+   "tags": [
+    "cloth",
+    "impact"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "flesh-impact": {
+   "takes": [
+    {
+     "file": "sounds/flesh-impact-1.wav"
+    },
+    {
+     "file": "sounds/flesh-impact-2.wav"
+    },
+    {
+     "file": "sounds/flesh-impact-3.wav"
+    },
+    {
+     "file": "sounds/flesh-impact-4.wav"
+    },
+    {
+     "file": "sounds/flesh-impact-5.wav"
+    }
+   ],
+   "tags": [
+    "flesh",
+    "impact"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "step-grass": {
+   "takes": [
+    {
+     "file": "sounds/step-grass-1.wav"
+    },
+    {
+     "file": "sounds/step-grass-2.wav"
+    },
+    {
+     "file": "sounds/step-grass-3.wav"
+    },
+    {
+     "file": "sounds/step-grass-4.wav"
+    },
+    {
+     "file": "sounds/step-grass-5.wav"
+    }
+   ],
+   "tags": [
+    "step",
+    "grass"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "step-stone": {
+   "takes": [
+    {
+     "file": "sounds/step-stone-1.wav"
+    },
+    {
+     "file": "sounds/step-stone-2.wav"
+    },
+    {
+     "file": "sounds/step-stone-3.wav"
+    },
+    {
+     "file": "sounds/step-stone-4.wav"
+    },
+    {
+     "file": "sounds/step-stone-5.wav"
+    }
+   ],
+   "tags": [
+    "step",
+    "stone"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "step-wood": {
+   "takes": [
+    {
+     "file": "sounds/step-wood-1.wav"
+    },
+    {
+     "file": "sounds/step-wood-2.wav"
+    },
+    {
+     "file": "sounds/step-wood-3.wav"
+    },
+    {
+     "file": "sounds/step-wood-4.wav"
+    },
+    {
+     "file": "sounds/step-wood-5.wav"
+    }
+   ],
+   "tags": [
+    "step",
+    "wood"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "step-snow": {
+   "takes": [
+    {
+     "file": "sounds/step-snow-1.wav"
+    },
+    {
+     "file": "sounds/step-snow-2.wav"
+    },
+    {
+     "file": "sounds/step-snow-3.wav"
+    },
+    {
+     "file": "sounds/step-snow-4.wav"
+    },
+    {
+     "file": "sounds/step-snow-5.wav"
+    }
+   ],
+   "tags": [
+    "step",
+    "snow"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  },
+  "step-carpet": {
+   "takes": [
+    {
+     "file": "sounds/step-carpet-1.wav"
+    },
+    {
+     "file": "sounds/step-carpet-2.wav"
+    },
+    {
+     "file": "sounds/step-carpet-3.wav"
+    },
+    {
+     "file": "sounds/step-carpet-4.wav"
+    },
+    {
+     "file": "sounds/step-carpet-5.wav"
+    }
+   ],
+   "tags": [
+    "step",
+    "carpet"
+   ],
+   "volume": 0.8,
+   "source": {
+    "pack": "Impact Sounds",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "url": "https://kenney.nl/assets/impact-sounds"
+   }
+  }
+ }
+}

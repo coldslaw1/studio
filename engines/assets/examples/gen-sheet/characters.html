@@ -1,0 +1,38 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Generated characters on the puppet rig</title>
+<style>body { margin: 0; background: #1b2030; } canvas { display: block; }</style>
+<canvas id="c"></canvas>
+<script type="module">
+// Draws generated characters with the puppet engine's vector renderer, one row per Kiln style,
+// each caught mid-stride so the rig and clips are visibly at work. Query: ?puppet=<url of puppet index.js>
+// &seed=<n>&types=a,b,c. Sets window.done when the picture is finished.
+import { generateAsset, resolveStyle, ramp, STYLES } from '../../src/index.js';
+const q = new URLSearchParams(location.search);
+const puppet = await import(q.get('puppet') ?? '../../../puppet/src/index.js');
+const types = (q.get('types') ?? 'warrior,mage,ranger,rogue,villager,farmer,merchant,guard,priest,smith,elder,child,noble,bard,goblin,orc,ogre,skeleton,ghoul,imp,golem,bandit,cultist,wolf,boar,rat,slime,bat').split(',');
+const seed = Number(q.get('seed') ?? 1);
+const styles = (q.get('styles') ?? Object.keys(STYLES).join(',')).split(',');
+const unit = Number(q.get('unit') ?? 62);
+const cellW = unit * 1.75; const rowH = unit * 3.5;
+const BACK = { storybook: '#2f5a3c', nocturne: '#14162c', papercut: '#e9dfc6', crypt: '#1a1622' };
+const canvas = document.getElementById('c');
+canvas.width = Math.round(types.length * cellW + 40); canvas.height = Math.round(styles.length * rowH);
+const ctx = canvas.getContext('2d');
+styles.forEach((styleName, row) => {
+  ctx.fillStyle = BACK[styleName] ?? '#222'; ctx.fillRect(0, row * rowH, canvas.width, rowH);
+  const renderer = puppet.createVectorRenderer({ style: resolveStyle(styleName), tones: ramp, unit, pitch: 12 });
+  types.forEach((type, i) => {
+    const asset = generateAsset({ kind: 'mob', type, seed: seed + i, style: styleName });
+    const ch = puppet.createCharacter({ model: asset.model, height: asset.height, animator: asset.model.animator });
+    ch.puppet.yaw = -28;
+    const speed = i % 3 === 2 ? 0 : ch.walkSpeed;
+    for (let f = 0; f < 47 + i * 3; f++) { if (f === 30 && i % 4 === 1) ch.attack(); ch.update(1 / 60, { vx: 0, vy: 0, facing: -28 }); ch.animator.params.speed = speed / ch.walkSpeed; }
+    renderer.draw(ctx, ch.puppet, 20 + (i + 0.5) * cellW, (row + 1) * rowH - unit * 0.35);
+    if (row === 0) { ctx.fillStyle = '#fff'; ctx.font = `${Math.round(unit * 0.2)}px sans-serif`; ctx.textAlign = 'center'; ctx.fillText(type, 20 + (i + 0.5) * cellW, unit * 0.3); }
+  });
+  // a 1.8 m mark on the left edge of every row
+  ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.fillRect(6, (row + 1) * rowH - unit * 0.35 - 1.8 * unit * Math.cos(12 * Math.PI / 180), 3, 1.8 * unit * Math.cos(12 * Math.PI / 180));
+});
+window.done = true;
+</script>

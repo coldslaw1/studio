@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Roam: world engine demo</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0d1016; color: #cfd6e4; font: 13px/1.4 Consolas, "Cascadia Mono", monospace; }
+  main { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px; }
+  canvas { width: min(100%, 960px); image-rendering: pixelated; border: 1px solid #2a3140; background: #000; }
+  #hud { white-space: pre; width: min(100%, 960px); color: #9fb0c8; }
+  kbd { border: 1px solid #3a4356; border-radius: 3px; padding: 0 4px; color: #e6ecf7; }
+</style>
+</head>
+<body>
+<main>
+  <canvas id="game" width="960" height="540"></canvas>
+  <div><kbd>WASD</kbd> walk &nbsp; <kbd>Shift</kbd> fly fast &nbsp; <kbd>1</kbd> top-down <kbd>2</kbd> isometric <kbd>3</kbd> characters &nbsp; <kbd>Space</kbd> build / remove a pillar &nbsp; <kbd>T</kbd> teleport &nbsp; <kbd>R</kbd> erase save</div>
+  <div id="hud"></div>
+</main>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

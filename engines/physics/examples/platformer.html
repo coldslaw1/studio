@@ -1,0 +1,74 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>physics example: platformer</title>
+<style>body{margin:0;background:#12141c;display:grid;place-items:center;height:100vh;color:#9aa;font:14px sans-serif}canvas{background:#1d2230}</style>
+<canvas id="game" width="640" height="360"></canvas>
+<div>Arrows or A/D to move, Space or Up to jump, Down to drop through thin platforms</div>
+<script type="module">
+import { createTileMap, createPlatformer, updatePlatformer, overlaps } from '../src/index.js';
+
+const map = createTileMap({
+  tileSize: 40,
+  grid: [
+    '################',
+    '#..............#',
+    '#.........C....#',
+    '#..C.....---...#',
+    '#.---..........#',
+    '#......##....C.#',
+    '#.P...###......#',
+    '#....####...--.#',
+    '################',
+  ],
+});
+const start = map.find('P')[0];
+const hero = createPlatformer({ x: start.x + 8, y: start.y + 8, w: 24, h: 32 });
+const coins = map.find('C').map((t) => ({ x: t.x + 20, y: t.y + 20, r: 8 }));
+let score = 0;
+
+const keys = new Set();
+addEventListener('keydown', (e) => keys.add(e.code));
+addEventListener('keyup', (e) => keys.delete(e.code));
+const held = (...codes) => codes.some((c) => keys.has(c));
+
+function update(dt) {
+  updatePlatformer(hero, map, {
+    moveX: (held('ArrowRight', 'KeyD') ? 1 : 0) - (held('ArrowLeft', 'KeyA') ? 1 : 0),
+    jump: held('Space', 'ArrowUp', 'KeyW'),
+    down: held('ArrowDown', 'KeyS'),
+  }, dt);
+  for (let i = coins.length - 1; i >= 0; i--) {
+    if (overlaps(hero, coins[i])) { coins.splice(i, 1); score++; }
+  }
+}
+
+const ctx = document.getElementById('game').getContext('2d');
+function draw() {
+  ctx.clearRect(0, 0, 640, 360);
+  for (let row = 0; row < map.rows; row++) {
+    for (let col = 0; col < map.cols; col++) {
+      if (map.isSolid(col, row)) { ctx.fillStyle = '#5b6480'; ctx.fillRect(col * 40, row * 40, 40, 40); }
+      else if (map.isOneWay(col, row)) { ctx.fillStyle = '#8fb573'; ctx.fillRect(col * 40, row * 40, 40, 8); }
+    }
+  }
+  ctx.fillStyle = '#ffd34d';
+  for (const c of coins) { ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = hero.onGround ? '#4fc3f7' : '#81d4fa';
+  ctx.fillRect(hero.x, hero.y, hero.w, hero.h);
+  ctx.fillStyle = '#fff';
+  ctx.font = '16px sans-serif';
+  ctx.fillText('Coins: ' + score, 50, 28);
+}
+
+let last = performance.now();
+let extra = 0;
+function frame(now) {
+  extra += Math.min(0.1, (now - last) / 1000);
+  last = now;
+  while (extra >= 1 / 60) { update(1 / 60); extra -= 1 / 60; }
+  draw();
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+window.game = { get state() { return { x: hero.x, y: hero.y, onGround: hero.onGround, score, coinsLeft: coins.length }; } };
+</script>

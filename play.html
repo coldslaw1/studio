@@ -1,0 +1,50 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Studio Engines demo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="play">
+<div class="bar">
+  <a class="nav" href="./">&larr; All demos</a>
+  <span class="title" id="title"></span>
+  <span class="keys" id="keys"></span>
+  <a class="nav" id="prev" href="#">&lsaquo; Prev</a>
+  <a class="nav" id="next" href="#">Next &rsaquo;</a>
+  <button class="nav" id="full" type="button" title="Fill the screen (Esc to leave)">Fullscreen</button>
+  <a class="nav" id="solo" href="#" title="Open the demo on its own">Open alone</a>
+</div>
+<div class="touchnote" id="touchnote">This demo is played with a keyboard. It will show, but you may not be able to move.</div>
+<iframe class="stage" id="stage" title="Demo" allow="autoplay; fullscreen; gamepad; local-network; local-network-access"></iframe>
+<script type="module">
+import { DEMOS, ENGINE_INFO } from './demos.js';
+const build = await fetch('./build.json').then((r) => r.json()).catch(() => ({ demos: DEMOS.map((d) => d.id) }));
+const list = DEMOS.filter((d) => build.demos.includes(d.id));
+const id = new URLSearchParams(location.search).get('demo');
+const at = Math.max(0, list.findIndex((d) => d.id === id));
+const demo = list[at];
+const stage = document.getElementById('stage');
+document.title = `${demo.title} | Studio Engines`;
+document.getElementById('title').textContent = `${ENGINE_INFO[demo.engine].name}: ${demo.title}`;
+document.getElementById('keys').textContent = demo.keys;
+document.getElementById('prev').href = `play.html?demo=${list[(at + list.length - 1) % list.length].id}`;
+document.getElementById('next').href = `play.html?demo=${list[(at + 1) % list.length].id}`;
+document.getElementById('solo').href = demo.page;
+if (!demo.touch && matchMedia('(pointer: coarse)').matches && !matchMedia('(any-pointer: fine)').matches) document.getElementById('touchnote').style.display = 'block';
+stage.src = demo.page;
+const full = document.getElementById('full');
+if (!document.fullscreenEnabled) full.hidden = true;
+full.onclick = () => { stage.requestFullscreen?.().then(focus).catch(() => {}); };
+// arrow keys and space must never scroll this page while a demo has them
+addEventListener('keydown', (e) => { if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key) && e.target === document.body) e.preventDefault(); });
+// keys go to the demo, not to this bar
+const focus = () => { try { stage.contentWindow.focus(); } catch { /* not loaded yet */ } };
+stage.addEventListener('load', focus);
+addEventListener('pointerdown', focus);
+addEventListener('focus', focus);
+</script>
+</body>
+</html>
